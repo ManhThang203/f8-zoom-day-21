@@ -5,7 +5,12 @@ Array.prototype.forEach2 = function(cb,thisArg) {
     for(let i = 0; i < length;i++){
         if(i in this){
             // thisArg to be {id:123}
-             cb.call(thisArg,this[i],i,this);
+            if(thisArg !== undefined){
+                cb.call(thisArg,this[i],i,this);
+            }
+            else{
+                cb(this[i],i,this);
+            }
         }
     }
 }
@@ -363,3 +368,9 @@ const count = items1.reduce((acc, item) => {
 console.log(count);
 
 
+// Create reverse2 function
+console.log("========== Create reverse 2 function ==========");
+// const numbers = [1, 2, 3, 4, 5];
+// for(let i = 0; i < Math.floor(numbers.length/2); i++) {
+//   [numbers[i], numbers[numbers.length-1-i]] = [numbers[numbers.length-1-i], numbers[i]]
+// }
