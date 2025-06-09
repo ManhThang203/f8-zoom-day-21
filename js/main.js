@@ -222,3 +222,144 @@ const taxRate = 0.1; // 10%
 const resul6 = prices.map2(price => price + price * taxRate);
 
 console.log(resul6);
+
+
+// Create every2 function
+console.log("========== Create every 2 function ==========")
+Array.prototype.every2 = function(callback, thisArg) {
+    const length = this.length;
+    for(let i = 0; i < length; i++){
+        if(i in this){
+            // !true khác true
+            if(!callback.call(thisArg, this[i],i,this)){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+console.log("========== For example 1 ==========");
+const ages = [18, 20, 30, 40];
+
+// Kiểm tra toàn bộ phần tử có từ 18 trở lên không
+const result6 = ages.every2(age => age >= 18);
+
+console.log(result6);
+
+console.log("========== For example 2 ==========");
+const products1 = [
+  { name: "Apple", stock: 10 },
+  { name: "Cherry", stock: 5 },
+  { name: "Banana", stock: 0 }
+];
+
+const result7 = products1.every2(product => product.stock > 0);
+
+console.log(result7);
+
+console.log("========== For example 3 ==========");
+const members = [
+  { name: "Bob", age: 10 },
+  { name: "John", age: 20 },
+  { name: "Alice", age: 18 }
+];
+
+const result8 = members.every2(member => member.age >= 18);
+
+console.log(result8);
+
+
+// Create some2 function
+console.log("========== Create some 2 function ==========")
+Array.prototype.some2 = function(callback, thisArg) {
+    const length = this.length;
+    for(let i = 0; i < length; i++){
+        if(i in this){
+            // true
+            if(callback.call(thisArg, this[i],i,this)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+console.log("========== For example 1 ==========");
+const numbers1 = [1, 5, 2, 7, 8, 10];
+
+// Kiểm tra trong mảng có chứa số chẵn không
+const result9 = numbers1.some2(number => number % 2 === 0);
+
+console.log(result9);
+
+console.log("========== For example 2 ==========");
+const students = [
+  { name: 'John', score: 55 },
+  { name: 'Bob', score: 80 },
+  { name: 'Alice', score: 45 }
+];
+
+const result10 = students.some2(student=> student.score >= 60);
+
+console.log(result10);
+
+console.log("========== For example 3 ==========");
+const products2 = [
+  { name: 'Tablet', stock: 10 },
+  { name: 'Laptop', stock: 0 },
+  { name: 'Phone', stock: 5 }
+];
+
+const result11 = products2.some2(product => product.stock === 0);
+
+console.log(result11);
+
+
+console.log("========== Create reduce 2 function ==========")
+Array.prototype.reduce2 = function(cb, initialValue) {
+    const length = this.length;
+    // initialValue to be undefined , null -> this[0];
+    // initialValue != undefined , null -> initialValue
+    let accValue = initialValue ?? this[0];
+    let startIndex = initialValue !== undefined ? 0 : 1;
+    for(let i = startIndex; i < length ; i++){
+        if(i in this){
+            accValue = cb(accValue,this[i],i,this);
+        }
+    }
+    return accValue;
+}
+
+console.log("========== For example 1 ==========");
+const numbers2 = [1, 2, 3, 4];
+const sum = numbers2.reduce2((total, number, index, arr) => {
+    console.log(`Index ${index}: total = ${total}, number = ${number}`);
+    return total + number;
+}, 0); // initialValue là 0
+
+console.log(sum); // Kết quả: 10
+
+
+console.log("========== For example 2 ==========");
+const products3 = [
+  { name: "iPhone", price: 100 },
+  { name: "iPad", price: 200 },
+  { name: "Macbook", price: 300 }
+];
+
+const total = products3.reduce((sum, product) => {
+  return sum + product.price;
+}, 0);
+
+console.log(total);
+
+console.log("========== For example 3 ==========");
+const items1 = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple'];
+
+const count = items1.reduce((acc, item) => {
+  acc[item] = (acc[item] || 0) + 1;
+  return acc;
+}, {});
+
+console.log(count);
+
+
